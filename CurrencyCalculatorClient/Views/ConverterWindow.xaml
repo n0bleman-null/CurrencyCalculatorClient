@@ -1,0 +1,38 @@
+﻿<Window x:Class="CurrencyCalculatorClient.Views.ConverterWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:CurrencyCalculatorClient.Views"
+        xmlns:viewModels="clr-namespace:CurrencyCalculatorClient.ViewModels"
+        mc:Ignorable="d"
+        d:DataContext="{d:DesignInstance viewModels:ConverterViewModel}"
+        Title="MainWindow" Height="450" Width="800">
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition />
+            <ColumnDefinition />
+        </Grid.ColumnDefinitions>
+        <StackPanel VerticalAlignment="Center">
+            <StackPanel Orientation="Horizontal" Margin="10">
+                <Label>Введите дату: </Label>
+                <DatePicker Name="Date" SelectedDateFormat="Short" SelectedDate="{Binding Date, UpdateSourceTrigger=PropertyChanged}"/>
+            </StackPanel>
+            <StackPanel Orientation="Horizontal" Margin="10">
+                <Label>Валюта (USD):</Label>
+                <TextBox Name="CurrencyCode" Width="100" Text="{Binding CurrencyCode, UpdateSourceTrigger=PropertyChanged}"/>
+            </StackPanel>
+            <StackPanel Orientation="Horizontal" Margin="10">
+                <Label>Количество:</Label>
+                <TextBox Name="NumberTextBox" Width="100" PreviewTextInput="NumberValidationTextBox" Text="{Binding Quantity, UpdateSourceTrigger=PropertyChanged}"/>
+            </StackPanel>
+            <Button Content="Получить с сервера" Command="{Binding ConvertCurrencyCommand}" Margin="10"/>
+        </StackPanel>
+        <DataGrid Grid.Column="1" x:Name="dataGrid" ItemsSource="{Binding Data}" AutoGenerateColumns="False" IsReadOnly="True">
+            <DataGrid.Columns>
+                <DataGridTextColumn Header="Валюта" Binding="{Binding Path=Abbreviation}" Width="100" />
+                <DataGridTextColumn Header="Цена" Binding="{Binding Path=Value}" Width="300" />
+            </DataGrid.Columns>
+        </DataGrid>
+    </Grid>
+</Window>
